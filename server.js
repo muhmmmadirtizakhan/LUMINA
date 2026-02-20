@@ -107,17 +107,8 @@ app.get('/api/health', (req, res) => {
 });
 
 // Start server
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log('\n✨ Lumina Premium Server Started!');
     console.log(`📡 URL: http://localhost:${PORT}`);
     console.log(`🤖 Model: ${MODEL_NAME}`);
-    console.log(`🔧 Test: http://localhost:${PORT}/api/test\n`);
-    
-    // Check files
-    if (fs.existsSync(path.join(__dirname, 'index.html'))) {
-        console.log('✅ index.html found');
-    }
-    if (fs.existsSync(path.join(__dirname, 'chat.js'))) {
-        console.log('✅ chat.js found');
-    }
 });
