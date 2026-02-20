@@ -108,7 +108,8 @@ app.get('/api/health', (req, res) => {
 
 // Start server
 app.listen(PORT, '0.0.0.0', () => {
-    console.log('\n✨ Lumina Premium Server Started!');
-    console.log(`📡 URL: http://localhost:${PORT}`);
-    console.log(`🤖 Model: ${MODEL_NAME}`);
+    console.log("=================================");
+    console.log("🚀 Lumina Server LIVE");
+    console.log(`🌍 Running on port ${PORT}`);
+    console.log("=================================");
 });
