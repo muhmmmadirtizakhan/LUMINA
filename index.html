@@ -159,7 +159,7 @@
             visibility: visible;
         }
 
-        /* Header - IMPROVED VISIBILITY */
+        /* Header - SHARP LINE */
         .chat-header {
             padding: 1rem 2rem;
             display: flex;
@@ -175,9 +175,9 @@
         }
 
         body.light-theme .chat-header {
-            background: rgba(255, 255, 255, 0.95);
-            border-bottom: 3px solid #8f6bc0;
-            box-shadow: 0 5px 20px -5px rgba(0,0,0,0.2), 0 2px 0 #d4c0ff inset;
+            background: rgba(255, 255, 255, 0.98);
+            border-bottom: 3px solid #8a6abf;
+            box-shadow: 0 5px 20px -5px rgba(0,0,0,0.15), 0 2px 0 #d4c0ff inset;
         }
 
         .brand small {
@@ -201,7 +201,7 @@
             background: linear-gradient(145deg, #4a3570, #2d1d4a);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 10px rgba(140, 100, 230, 0.3);
+            text-shadow: 0 0 10px rgba(138, 106, 191, 0.3);
         }
 
         /* Hamburger Menu */
@@ -229,9 +229,9 @@
         }
 
         body.light-theme .hamburger {
-            background: rgba(255, 255, 255, 0.95);
-            border-color: #9a82c5;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.98);
+            border-color: #8a6abf;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1), 0 0 15px rgba(138, 106, 191, 0.3);
         }
 
         .hamburger span {
@@ -245,10 +245,24 @@
 
         body.light-theme .hamburger span {
             background: linear-gradient(90deg, #5a4282, #372b52);
-            box-shadow: 0 0 8px #8f6bc0;
+            box-shadow: 0 0 8px #8a6abf;
         }
 
-        /* Mobile Menu */
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(10px) rotate(45deg);
+            width: 26px;
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-10px) rotate(-45deg);
+            width: 26px;
+        }
+
+        /* Mobile Menu - FIXED */
         .mobile-nav {
             position: absolute;
             top: 80px;
@@ -280,7 +294,7 @@
 
         body.light-theme .mobile-nav {
             background: rgba(255, 255, 255, 0.98);
-            border-color: #8f6bc0;
+            border-color: #8a6abf;
             box-shadow: 0 20px 40px -10px rgba(0,0,0,0.2);
         }
 
@@ -288,6 +302,59 @@
             opacity: 1;
             visibility: visible;
             transform: scale(1) translateY(0);
+        }
+
+        .model-badge {
+            color: #ffffff;
+            font-size: 0.9rem;
+            padding: 0.8rem 1rem;
+            background: rgba(183, 126, 255, 0.15);
+            border-radius: 40px;
+            margin-bottom: 0.5rem;
+            border: 2px solid #b77eff;
+            text-align: center;
+            letter-spacing: 1px;
+            font-weight: 400;
+        }
+
+        body.light-theme .model-badge {
+            color: #2a1e3a;
+            background: rgba(138, 106, 191, 0.1);
+            border-color: #8a6abf;
+        }
+
+        .mobile-nav button {
+            color: #ffffff;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            font-weight: 300;
+            background: rgba(183, 126, 255, 0.05);
+            border: 2px solid transparent;
+            text-align: left;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.2s;
+        }
+
+        body.light-theme .mobile-nav button {
+            color: #2a1e3a !important;
+            background: rgba(138, 106, 191, 0.05);
+        }
+
+        .mobile-nav button:hover {
+            background: rgba(183, 126, 255, 0.2);
+            border-color: #b77eff;
+            box-shadow: 0 0 20px rgba(183, 126, 255, 0.3);
+        }
+
+        body.light-theme .mobile-nav button:hover {
+            background: rgba(138, 106, 191, 0.15);
+            border-color: #8a6abf;
         }
 
         /* Chat Container */
@@ -326,7 +393,7 @@
             border: 2px solid transparent;
         }
 
-        /* Messages - Responsive */
+        /* Messages */
         .message {
             max-width: 70%;
             display: flex;
@@ -372,7 +439,7 @@
             align-self: flex-start;
         }
 
-        /* Message Bubbles - Enhanced */
+        /* Message Bubbles */
         .bubble {
             padding: 1.2rem 1.8rem;
             border-radius: 28px 28px 8px 28px;
@@ -412,29 +479,28 @@
             }
         }
 
-        /* Light Theme Bubbles */
+        /* Light Theme Bubbles - SHARP */
         body.light-theme .bubble {
             background: #ffffff;
-            box-shadow: 0 10px 25px -8px rgba(0,0,0,0.15), 0 0 0 3px #b77eff inset;
+            box-shadow: 0 10px 25px -8px rgba(0,0,0,0.1), 0 0 0 3px #8a6abf inset;
             color: #1a1a2a;
-            border: 1px solid #b8a5e0;
+            border: 1px solid #8a6abf;
         }
 
         body.light-theme .user .bubble {
             background: linear-gradient(145deg, #8a75c0, #6b55a0);
-            box-shadow: 0 15px 25px -8px rgba(0,0,0,0.2), 0 0 0 3px #e4c4ff inset;
+            box-shadow: 0 15px 25px -8px rgba(0,0,0,0.15), 0 0 0 3px #d4c0ff inset;
             color: #ffffff;
             border: 1px solid #c6b0ff;
         }
 
         body.light-theme .bot .bubble {
             background: #ffffff;
-            border: 2px solid #b77eff;
-            color: #1a1a2a;
+            border: 2px solid #8a6abf;
             box-shadow: 0 10px 25px -8px rgba(0,0,0,0.1), 0 0 0 2px #f0e4ff inset;
+            color: #1a1a2a;
         }
 
-        /* Timestamp */
         .timestamp {
             font-size: 0.7rem;
             margin-top: 8px;
@@ -446,8 +512,13 @@
         }
 
         body.light-theme .timestamp {
-            color: #8f6bc0;
-            text-shadow: 0 0 5px rgba(140, 100, 230, 0.3);
+            color: #8a6abf;
+            text-shadow: 0 0 5px rgba(138, 106, 191, 0.3);
+        }
+
+        .user .timestamp {
+            text-align: right;
+            margin-right: 16px;
         }
 
         /* Typing Indicator */
@@ -470,7 +541,25 @@
             box-shadow: 0 0 20px #b77eff;
         }
 
-        /* Input Area - IMPROVED VISIBILITY */
+        body.light-theme .typing-indicator span {
+            background: #8a6abf;
+            box-shadow: 0 0 15px #8a6abf;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.8; }
+            30% { transform: translateY(-15px); opacity: 1; }
+        }
+
+        /* Input Area - SHARP LINE */
         .input-area {
             background: rgba(10, 5, 15, 0.95);
             backdrop-filter: blur(20px);
@@ -486,9 +575,9 @@
         }
 
         body.light-theme .input-area {
-            background: rgba(255, 255, 255, 0.95);
-            border-top: 4px solid #8f6bc0;
-            box-shadow: 0 -10px 30px -10px rgba(0,0,0,0.2), 0 -2px 0 #d4c0ff inset;
+            background: rgba(255, 255, 255, 0.98);
+            border-top: 4px solid #8a6abf;
+            box-shadow: 0 -10px 30px -10px rgba(0,0,0,0.1), 0 -2px 0 #d4c0ff inset;
         }
 
         @media (max-width: 1024px) {
@@ -523,8 +612,8 @@
 
         body.light-theme .input-wrapper {
             background: #ffffff;
-            border-color: #8f6bc0;
-            box-shadow: 0 5px 15px -5px rgba(0,0,0,0.2);
+            border: 3px solid #8a6abf;
+            box-shadow: 0 5px 15px -5px rgba(0,0,0,0.1), 0 0 20px rgba(138, 106, 191, 0.2);
         }
 
         .input-wrapper:focus-within {
@@ -561,6 +650,11 @@
             text-shadow: 0 0 5px rgba(183, 126, 255, 0.3);
         }
 
+        body.light-theme .input-wrapper input::placeholder {
+            color: #8a6abf;
+            opacity: 0.7;
+        }
+
         .send-btn {
             background: linear-gradient(135deg, #b77eff, #8a6abf);
             border: none;
@@ -583,8 +677,8 @@
         }
 
         body.light-theme .send-btn {
-            background: linear-gradient(135deg, #9f89cf, #8f6bc0);
-            box-shadow: 0 5px 15px -5px rgba(0,0,0,0.3), 0 0 0 3px #e4d0ff inset;
+            background: linear-gradient(135deg, #8a6abf, #6b4f9a);
+            box-shadow: 0 5px 15px -5px rgba(0,0,0,0.2), 0 0 0 3px #d4c0ff inset;
         }
 
         .send-btn svg {
@@ -605,7 +699,7 @@
             box-shadow: 0 12px 30px #000000, 0 0 0 3px #f0e0ff inset, 0 0 60px #dbb5ff;
         }
 
-        /* Code blocks responsiveness */
+        /* Code blocks */
         .bubble pre {
             background: #1e1a2a;
             padding: 1rem;
@@ -628,6 +722,30 @@
             border: 1px solid #b77eff;
             white-space: pre-wrap;
             word-wrap: break-word;
+        }
+
+        body.light-theme .bubble pre {
+            background: #f0eaff;
+            border-color: #8a6abf;
+        }
+
+        body.light-theme .bubble code {
+            background: #f0eaff;
+            color: #5a4282;
+            border-color: #8a6abf;
+        }
+
+        .bubble blockquote {
+            border-left: 4px solid #b77eff;
+            padding-left: 1rem;
+            margin: 1rem 0;
+            color: #d0c0f0;
+            font-style: italic;
+        }
+
+        body.light-theme .bubble blockquote {
+            border-left-color: #8a6abf;
+            color: #4a3a6a;
         }
 
         /* Info Modal */
@@ -672,7 +790,7 @@
 
         body.light-theme .info-content {
             background: #ffffff;
-            border-color: #8f6bc0;
+            border-color: #8a6abf;
             box-shadow: 0 20px 40px -10px rgba(0,0,0,0.2);
         }
 
@@ -725,12 +843,40 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes typing {
-            0%, 60%, 100% { transform: translateY(0); opacity: 0.8; }
-            30% { transform: translateY(-15px); opacity: 1; }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translate(-50%, 20px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 1; transform: translate(-50%, 0); }
+            to { opacity: 0; transform: translate(-50%, 20px); }
         }
 
-        /* Responsive Table */
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #b77eff;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 30px #b77eff;
+            z-index: 1000;
+            animation: slideUp 0.3s ease;
+        }
+        
+        body.light-theme .notification {
+            background: #8a6abf;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2), 0 0 30px #8a6abf;
+        }
+
+        /* Table responsiveness */
         .bubble table {
             border-collapse: collapse;
             width: 100%;
@@ -756,7 +902,7 @@
 
         body.light-theme .bubble th,
         body.light-theme .bubble td {
-            border-color: #8f6bc0;
+            border-color: #8a6abf;
         }
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -784,16 +930,19 @@
                 </div>
             </div>
 
-            <!-- Mobile Menu -->
+            <!-- Mobile Menu - WITH DOWNLOAD BUTTON -->
             <div class="mobile-nav" id="mobileMenu">
-                <div class="model-badge" style="color: white; padding: 0.8rem; background: rgba(183, 126, 255, 0.2); border: 2px solid #b77eff; border-radius: 40px; text-align: center;">✨ GEMINI 2.5 FLASH</div>
-                <button id="resetChatBtn" style="color: white;">
+                <div class="model-badge">✨ GEMINI 2.5 FLASH</div>
+                <button id="resetChatBtn">
                     <span>⟲</span> Reset Conversation
                 </button>
-                <button id="toggleThemeBtn" style="color: white;">
+                <button id="downloadChatBtn">
+                    <span>⬇️</span> Download Chat
+                </button>
+                <button id="toggleThemeBtn">
                     <span>☾</span> Toggle Theme
                 </button>
-                <button id="infoBtn" style="color: white;">
+                <button id="infoBtn">
                     <span>ⓘ</span> About Lumina
                 </button>
             </div>
@@ -801,13 +950,13 @@
             <!-- Chat Container -->
             <div class="chat-container" id="chatContainer">
                 <div class="message bot">
-                    <div class="bubble">✨ Good evening. I'm **Lumina** — your premium AI interface powered by **Gemini 2.5 Flash**.
-<br><br>
-I support:
-- Markdown formatting
-- Code blocks with syntax highlighting
-- Bullet points and numbered lists
-- **Bold** and *italic* text
+                    <div class="bubble">✨ Good evening. I'm  ✨Lumina** — your premium AI interface powered by ✨ Gemini 2.5 Flash ✨.
+<br>
+<p>I support:<br>
+- Markdown formatting<br>
+- Code blocks with syntax highlighting<br>
+- **Bold** and *italic* text<br>
+- Bullet points and lists<br>
 <br>
 How may I assist you today?</div>
                     <span class="timestamp">✦ just now</span>
@@ -835,10 +984,10 @@ How may I assist you today?</div>
             • Full Markdown formatting<br>
             • Code syntax highlighting<br>
             • Dark/Light premium themes<br>
-            • Full-screen desktop experience<br>
+            • Download chat history<br>
             • Responsive mobile design<br>
             • Real-time AI responses</p>
-            <p><em>Version 2.0 · Enhanced Edition</em></p>
+            <p><em>Version 2.0 · Premium Edition</em></p>
             <button id="closeInfoBtn">CLOSE</button>
         </div>
     </div>
