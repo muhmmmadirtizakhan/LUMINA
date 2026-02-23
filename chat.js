@@ -1,4 +1,4 @@
-// Lumina Chat Interface - Enhanced Version
+// Lumina Chat Interface - Enhanced Version with Download Feature
 class LuminaChat {
     constructor() {
         this.API_URL = '/api/chat';
@@ -33,6 +33,7 @@ class LuminaChat {
         this.sendBtn = document.getElementById('sendMessageBtn');
         this.resetBtn = document.getElementById('resetChatBtn');
         this.toggleThemeBtn = document.getElementById('toggleThemeBtn');
+        this.downloadBtn = document.getElementById('downloadChatBtn');
         this.infoBtn = document.getElementById('infoBtn');
         this.infoModal = document.getElementById('infoModal');
         this.closeInfoBtn = document.getElementById('closeInfoBtn');
@@ -72,6 +73,9 @@ class LuminaChat {
         // Menu actions
         this.resetBtn.addEventListener('click', () => this.resetChat());
         this.toggleThemeBtn.addEventListener('click', () => this.toggleTheme());
+        if (this.downloadBtn) {
+            this.downloadBtn.addEventListener('click', () => this.downloadChat());
+        }
         this.infoBtn.addEventListener('click', () => this.showInfo());
         this.closeInfoBtn.addEventListener('click', () => this.hideInfo());
         
@@ -95,18 +99,15 @@ class LuminaChat {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
                     message: text,
-                    history: this.chatHistory.slice(-5) // Send last 5 messages for context
+                    history: this.chatHistory.slice(-5)
                 })
             });
 
             const data = await response.json();
             
             this.removeTypingIndicator();
-            
-            // Format and add bot response with markdown
             this.addBotMessage(data.response);
             
-            // Save to history
             this.chatHistory.push({
                 user: text,
                 bot: data.response,
@@ -138,7 +139,6 @@ class LuminaChat {
         const messageDiv = document.createElement('div');
         messageDiv.className = 'message bot';
         
-        // Render markdown
         const htmlContent = marked.parse(text);
         
         messageDiv.innerHTML = `
@@ -147,7 +147,6 @@ class LuminaChat {
         `;
         this.chatContainer.appendChild(messageDiv);
         
-        // Apply syntax highlighting to code blocks
         messageDiv.querySelectorAll('pre code').forEach((block) => {
             hljs.highlightElement(block);
         });
@@ -180,7 +179,6 @@ class LuminaChat {
         this.chatHistory = [];
         localStorage.removeItem('luminaChatHistory');
         
-        // Add welcome message
         const welcomeMsg = `✨ Chat reset. **Lumina** is ready.
 
 I support:
@@ -194,12 +192,97 @@ How can I help you?`;
         this.addBotMessage(welcomeMsg);
     }
 
+    // NEW: Download Chat Functionality
+    downloadChat() {
+        if (this.chatHistory.length === 0) {
+            alert('No chat history to download.');
+            return;
+        }
+
+        // Format chat for download
+        let chatText = "LUMINA PREMIUM CHAT HISTORY\n";
+        chatText += "============================\n";
+        chatText += `Generated: ${new Date().toLocaleString()}\n`;
+        chatText += `Theme: ${this.isDarkTheme ? 'Dark' : 'Light'}\n`;
+        chatText += "============================\n\n";
+
+        this.chatHistory.forEach((entry, index) => {
+            chatText += `[${index + 1}] ${new Date(entry.timestamp).toLocaleString()}\n`;
+            chatText += `👤 You: ${entry.user}\n`;
+            chatText += `🤖 Lumina: ${entry.bot.replace(/\*\*/g, '').replace(/\*/g, '')}\n`;
+            chatText += "----------------------------\n\n";
+        });
+
+        // Create and download file
+        const blob = new Blob([chatText], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `lumina-chat-${this.formatDateForFile()}.txt`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        // Show success message
+        this.showNotification('Chat history downloaded successfully!');
+    }
+
+    // Helper: Format date for filename
+    formatDateForFile() {
+        const d = new Date();
+        return `${d.getFullYear()}-${(d.getMonth()+1).toString().padStart(2,'0')}-${d.getDate().toString().padStart(2,'0')}`;
+    }
+
+    // Helper: Show temporary notification
+    showNotification(message) {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #b77eff;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 30px #b77eff;
+            z-index: 1000;
+            animation: slideUp 0.3s ease;
+        `;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.animation = 'slideDown 0.3s ease';
+            setTimeout(() => notification.remove(), 300);
+        }, 2000);
+    }
+
     toggleTheme() {
         document.body.classList.toggle('light-theme');
         this.isDarkTheme = !this.isDarkTheme;
         this.toggleThemeBtn.innerHTML = this.isDarkTheme ? 
             '<span>☾</span> Dark Theme' : 
             '<span>☀</span> Light Theme';
+        
+        // Force menu button colors to update
+        this.updateMenuButtonColors();
+    }
+
+    // Fix menu button colors in light theme
+    updateMenuButtonColors() {
+        const buttons = this.mobileMenu.querySelectorAll('button');
+        buttons.forEach(btn => {
+            if (this.isDarkTheme) {
+                btn.style.color = '#ffffff';
+            } else {
+                btn.style.color = '#2a1e3a';
+            }
+        });
     }
 
     showInfo() {
@@ -245,7 +328,7 @@ How can I help you?`;
             const saved = localStorage.getItem('luminaChatHistory');
             if (saved) {
                 this.chatHistory = JSON.parse(saved);
-                this.chatContainer.innerHTML = ''; // Clear existing
+                this.chatContainer.innerHTML = '';
                 this.chatHistory.forEach(entry => {
                     if (entry.user) this.addUserMessage(entry.user);
                     if (entry.bot) this.addBotMessage(entry.bot);
@@ -261,3 +344,17 @@ How can I help you?`;
 document.addEventListener('DOMContentLoaded', () => {
     window.luminaChat = new LuminaChat();
 });
+
+// Add animation styles
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideUp {
+        from { opacity: 0; transform: translate(-50%, 20px); }
+        to { opacity: 1; transform: translate(-50%, 0); }
+    }
+    @keyframes slideDown {
+        from { opacity: 1; transform: translate(-50%, 0); }
+        to { opacity: 0; transform: translate(-50%, 20px); }
+    }
+`;
+document.head.appendChild(style);
