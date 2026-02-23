@@ -1,5 +1,5 @@
 // Lumina Chat Server - Using Gemini 2.5 Flash
-require('dotenv').config(); // <-- Load .env first
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -9,7 +9,7 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Gemini API configuration from .env
+// Gemini API configuration
 const API_KEY = process.env.GEMINI_API_KEY;
 if (!API_KEY) {
     console.error('❌ GEMINI_API_KEY not found in .env');
@@ -17,17 +17,22 @@ if (!API_KEY) {
 }
 
 const genAI = new GoogleGenerativeAI(API_KEY);
-
-// Working model name
 const MODEL_NAME = "gemini-2.5-flash";
-
-// Initialize model
 const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static(__dirname));
+
+// 🟢 SERVE STATIC FILES WITH PROPER MIME TYPES
+app.get('/chat.js', (req, res) => {
+    res.setHeader('Content-Type', 'application/javascript');
+    res.sendFile(path.join(__dirname, 'chat.js'));
+});
+
+app.get('/index.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 // Serve main page
 app.get('/', (req, res) => {
@@ -46,7 +51,6 @@ app.post('/api/chat', async (req, res) => {
         console.log(`\n📨 User: ${message}`);
         console.log(`🤖 Using: ${MODEL_NAME}`);
 
-        // Build context from history
         let prompt = message;
         if (history.length > 0) {
             const context = history.map(h => 
@@ -55,7 +59,6 @@ app.post('/api/chat', async (req, res) => {
             prompt = `Previous conversation:\n${context}\n\nNew question: ${message}\n\nProvide a well-formatted response with markdown.`;
         }
 
-        // Generate response
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const text = response.text();
